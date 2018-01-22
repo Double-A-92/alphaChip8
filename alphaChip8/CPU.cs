@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/
+﻿// http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/
 // http://devernay.free.fr/hacks/chip8/C8TECH10.HTM#00E0
 namespace AlphaChip8
 {
     public class CPU
     {
-        /// <summary> 4K Memory </summary>
+        /// <summary> 4K memory </summary>
         private byte[] memory = new byte[4096];
 
         /// <summary> Data registers V0 to VF </summary>
@@ -28,14 +22,18 @@ namespace AlphaChip8
         /// <summary> Stack pointer </summary>
         private ushort stackPointer = 0;
 
-        /// <summary> Memory that holds the state of the monochrome display (64×32 pixels) </summary>
-        private bool[,] displayMemory = new bool[64, 32];
-
-        /// <summary> Counter of the delay timer </summary>
-        private byte delayTimer = 0;
-
         /// <summary> Counter of the sound timer </summary>
         private byte soundTimer = 0;
+
+        /// <summary> Instance of the Display </summary>
+        private Display display = new Display();
+
+        /// <summary> Enables to access the memory externally. </summary>
+        /// <returns>The current 4K of memory</returns>
+        public byte[] GetMemory()
+        {
+            return this.memory;
+        }
 
         #region Instructions
 
@@ -55,7 +53,7 @@ namespace AlphaChip8
         /// </summary>
         public virtual void CLS()
         {
-            Array.Clear(this.displayMemory, 0, this.displayMemory.Length);
+            this.display.Clear();
         }
 
         /// <summary>
