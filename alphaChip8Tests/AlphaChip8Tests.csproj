@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="InstructionDecoderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DisplayTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

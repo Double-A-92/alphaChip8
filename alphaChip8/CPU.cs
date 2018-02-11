@@ -26,7 +26,13 @@ namespace AlphaChip8
         private byte soundTimer = 0;
 
         /// <summary> Instance of the Display </summary>
-        private Display display = new Display();
+        private Display display;
+
+        /// <summary> Initializes a new instance of the <see cref="CPU"/> class. </summary>
+        public CPU()
+        {
+            this.display = new Display(this.memory);
+        }
 
         /// <summary> Enables to access the memory externally. </summary>
         /// <returns>The current 4K of memory</returns>
@@ -131,7 +137,7 @@ namespace AlphaChip8
         }
 
         /// <summary>
-        /// LD Vx, byte
+        /// 6xkk - LD Vx, byte
         /// Puts the value kk into register Vx.
         /// </summary>
         /// <param name="registerIndex">V register (x)</param>
@@ -142,7 +148,7 @@ namespace AlphaChip8
         }
 
         /// <summary>
-        /// ADD Vx, byte
+        /// 7xkk - ADD Vx, byte
         /// Adds the value kk to the value of register Vx, then stores the result in Vx.
         /// </summary>
         /// <param name="registerIndex">V register (x)</param>
@@ -152,8 +158,19 @@ namespace AlphaChip8
             this.registers[registerIndex] += value;
         }
 
-        // TODO: Implement all the other instructions
+        /// <summary>
+        /// Fx29 - LD F, Vx
+        /// The value of I is set to the location for the hexadecimal sprite corresponding to the value of Vx.
+        /// </summary>
+        /// <param name="registerIndex">V register (x)</param>
+        public virtual void LD_F(int registerIndex)
+        {
+            this.index = this.display.GetSpriteLocation(this.registers[registerIndex]);
 
+            // TODO: Add this to InstructionDecoder
+        }
+
+        // TODO: Implement all the other instructions
         #endregion
     }
 }
